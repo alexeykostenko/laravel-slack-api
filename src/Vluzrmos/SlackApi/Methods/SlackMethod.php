@@ -3,6 +3,7 @@
 namespace Vluzrmos\SlackApi\Methods;
 
 use Vluzrmos\SlackApi\Contracts\SlackApi;
+use Carbon\Carbon;
 use Illuminate\Contracts\Cache\Repository as Cache;
 
 abstract class SlackMethod
@@ -63,13 +64,13 @@ abstract class SlackMethod
      *
      * @param string $key
      * @param mixed  $value
-     * @param int    $seconds Default 60
+     * @param int    $minutes Default 1
      *
      * @return mixed
      */
-    public function cachePut($key, $value, $seconds = 60)
+    public function cachePut($key, $value, $minutes = 1)
     {
-        $this->cache->put($this->cachePrefix($key), $value, $seconds);
+        $this->cache->put($this->cachePrefix($key), $value, Carbon::now()->addMinutes($minutes));
 
         return $value;
     }
@@ -77,14 +78,14 @@ abstract class SlackMethod
     /**
      * Remember the result value for a given closure.
      * @param $key
-     * @param $seconds
+     * @param $minutes
      * @param $callback
      *
      * @return mixed
      */
-    public function cacheRemember($key, $seconds, $callback)
+    public function cacheRemember($key, $minutes, $callback)
     {
-        return $this->cache->remember($this->cachePrefix($key), $seconds, $callback);
+        return $this->cache->remember($this->cachePrefix($key), Carbon::now()->addMinutes($minutes), $callback);
     }
 
     /**

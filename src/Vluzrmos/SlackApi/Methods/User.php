@@ -96,16 +96,16 @@ class User extends SlackMethod implements SlackUser
      * @param string|array $nicks
      * @param bool         $force force to reload the users list
      *
-     * @param int          $cacheSeconds Minutes or a Date to cache the results, default 60 seconds
+     * @param int          $cacheMinutes Minutes or a Date to cache the results, default 1 minute
      *
      * @return array
      */
-    public function getUsersIDsByNicks($nicks, $force = false, $cacheSeconds = 60)
+    public function getUsersIDsByNicks($nicks, $force = false, $cacheMinutes = 1)
     {
         $users = $this->cacheGet('list');
 
         if (! $users || $force) {
-            $users = $this->cachePut('list', $this->lists(), $cacheSeconds);
+            $users = $this->cachePut('list', $this->lists(), $cacheMinutes);
         }
 
         if (! is_array($nicks)) {
