@@ -1,14 +1,10 @@
-## Laravel 5 e Lumen - Slack API
-
-[![Join the chat at https://gitter.im/vluzrmos/laravel-slack-api](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vluzrmos/laravel-slack-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+## Laravel Slack API wrapper
 
 This package provides a simple way to use [Slack API](https://api.slack.com).
 
-[![Latest Stable Version](https://poser.pugx.org/vluzrmos/slack-api/v/stable.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![Total Downloads](https://poser.pugx.org/vluzrmos/slack-api/downloads.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![Latest Unstable Version](https://poser.pugx.org/vluzrmos/slack-api/v/unstable.svg)](https://packagist.org/packages/vluzrmos/slack-api) [![License](https://poser.pugx.org/vluzrmos/slack-api/license.svg)](https://packagist.org/packages/vluzrmos/slack-api)
-
 ## Instalation 
 
-`composer require vluzrmos/slack-api`
+`composer require doroshenkoss/slack-api`
 
 ## Instalation on Laravel 5
 Add to `config/app.php`:
@@ -18,7 +14,7 @@ Add to `config/app.php`:
 
 [
     'providers' => [
-        Vluzrmos\SlackApi\SlackApiServiceProvider::class,
+        SlackLite\SlackApi\SlackApiServiceProvider::class,
     ]
 ]
 
@@ -34,18 +30,18 @@ and add the Facades to your aliases, if you need it
 
 [
     'aliases' => [
-        'SlackApi'              => Vluzrmos\SlackApi\Facades\SlackApi::class,
-        'SlackChannel'          => Vluzrmos\SlackApi\Facades\SlackChannel::class,
-        'SlackChat'             => Vluzrmos\SlackApi\Facades\SlackChat::class,
-        'SlackGroup'            => Vluzrmos\SlackApi\Facades\SlackGroup::class,
-        'SlackFile'             => Vluzrmos\SlackApi\Facades\SlackFile::class,
-        'SlackSearch'           => Vluzrmos\SlackApi\Facades\SlackSearch::class,
-        'SlackInstantMessage'   => Vluzrmos\SlackApi\Facades\SlackInstantMessage::class,
-        'SlackUser'             => Vluzrmos\SlackApi\Facades\SlackUser::class,
-        'SlackStar'             => Vluzrmos\SlackApi\Facades\SlackStar::class,
-        'SlackUserAdmin'        => Vluzrmos\SlackApi\Facades\SlackUserAdmin::class,
-        'SlackRealTimeMessage'  => Vluzrmos\SlackApi\Facades\SlackRealTimeMessage::class,
-        'SlackTeam'             => Vluzrmos\SlackApi\Facades\SlackTeam::class,
+        'SlackApi'              => SlackLite\SlackApi\Facades\SlackApi::class,
+        'SlackChannel'          => SlackLite\SlackApi\Facades\SlackChannel::class,
+        'SlackChat'             => SlackLite\SlackApi\Facades\SlackChat::class,
+        'SlackGroup'            => SlackLite\SlackApi\Facades\SlackGroup::class,
+        'SlackFile'             => SlackLite\SlackApi\Facades\SlackFile::class,
+        'SlackSearch'           => SlackLite\SlackApi\Facades\SlackSearch::class,
+        'SlackInstantMessage'   => SlackLite\SlackApi\Facades\SlackInstantMessage::class,
+        'SlackUser'             => SlackLite\SlackApi\Facades\SlackUser::class,
+        'SlackStar'             => SlackLite\SlackApi\Facades\SlackStar::class,
+        'SlackUserAdmin'        => SlackLite\SlackApi\Facades\SlackUserAdmin::class,
+        'SlackRealTimeMessage'  => SlackLite\SlackApi\Facades\SlackRealTimeMessage::class,
+        'SlackTeam'             => SlackLite\SlackApi\Facades\SlackTeam::class,
     ]
 ]
 
@@ -60,7 +56,7 @@ Add that line on `bootstrap/app.php`:
 ```php
 <?php 
 // $app->register('App\Providers\AppServiceProvider'); (by default that comes commented)
-$app->register('Vluzrmos\SlackApi\SlackApiServiceProvider');
+$app->register('SlackLite\SlackApi\SlackApiServiceProvider');
 
 ?>
 ```
@@ -70,12 +66,12 @@ If you want to use facades, add this lines on <code>bootstrap/app.php</code>
 ```php
 <?php
 
-class_alias('Vluzrmos\SlackApi\Facades\SlackApi', 'SlackApi');
-class_alias('Vluzrmos\SlackApi\Facades\SlackChannel', 'SlackChannel');
-class_alias('Vluzrmos\SlackApi\Facades\SlackChat', 'SlackChat');
-class_alias('Vluzrmos\SlackApi\Facades\SlackGroup', 'SlackGroup');
-class_alias('Vluzrmos\SlackApi\Facades\SlackUser', 'SlackUser');
-class_alias('Vluzrmos\SlackApi\Facades\SlackTeam', 'SlackTeam');
+class_alias('SlackLite\SlackApi\Facades\SlackApi', 'SlackApi');
+class_alias('SlackLite\SlackApi\Facades\SlackChannel', 'SlackChannel');
+class_alias('SlackLite\SlackApi\Facades\SlackChat', 'SlackChat');
+class_alias('SlackLite\SlackApi\Facades\SlackGroup', 'SlackGroup');
+class_alias('SlackLite\SlackApi\Facades\SlackUser', 'SlackUser');
+class_alias('SlackLite\SlackApi\Facades\SlackTeam', 'SlackTeam');
 //... and others
 
 ?>
@@ -86,21 +82,21 @@ Otherwise, just use the singleton shortcuts:
 ```php
 <?php
 
-/** @var \Vluzrmos\SlackApi\Contracts\SlackApi $slackapi */
+/** @var \SlackLite\SlackApi\Contracts\SlackApi $slackapi */
 $slackapi     = app('slack.api');
 
-/** @var \Vluzrmos\SlackApi\Contracts\SlackChat $slackchat */
+/** @var \SlackLite\SlackApi\Contracts\SlackChat $slackchat */
 $slackchat    = app('slack.chat');
 
-/** @var \Vluzrmos\SlackApi\Contracts\SlackChannel $slackchannel */
+/** @var \SlackLite\SlackApi\Contracts\SlackChannel $slackchannel */
 $slackchannel = app('slack.channel');
 
 //or 
 
-/** @var \Vluzrmos\SlackApi\Contracts\SlackApi $slackapi */
+/** @var \SlackLite\SlackApi\Contracts\SlackApi $slackapi */
 $slackapi  = slack();
 
-/** @var \Vluzrmos\SlackApi\Contracts\SlackChat $slackchat */
+/** @var \SlackLite\SlackApi\Contracts\SlackChat $slackchat */
 $slackchat = slack('chat'); // or slack('slack.chat')
 
 //...
@@ -185,7 +181,7 @@ slack('Team')->info();
 
 namespace App\Http\Controllers;    
     
-use Vluzrmos\SlackApi\Contracts\SlackUser;
+use SlackLite\SlackApi\Contracts\SlackUser;
 
 class YourController extends Controller{
     /** @var  SlackUser */
@@ -206,7 +202,7 @@ class YourController extends Controller{
 ## All Injectable Contracts:
 
 ### Generic API
-`Vluzrmos\SlackApi\Contracts\SlackApi`
+`SlackLite\SlackApi\Contracts\SlackApi`
 
 Allows you to do generic requests to the api with the following http verbs:
 `get`, `post`, `put`, `patch`, `delete` ... all allowed api methods you could see here: [Slack Web API Methods](https://api.slack.com/methods).
@@ -232,66 +228,86 @@ $admin->invite('jhon.doe@example.com');
 ```
 
 ### Channels API
-`Vluzrmos\SlackApi\Contracts\SlackChannel`
+`SlackLite\SlackApi\Contracts\SlackChannel`
 
 Allows you to operate channels:
 `invite`, `archive`, `rename`, `join`, `kick`, `setPurpose` ...
 
 
 ### Chat API
-`Vluzrmos\SlackApi\Contracts\SlackChat`
+`SlackLite\SlackApi\Contracts\SlackChat`
 
 Allows you to send, update and delete messages with methods:
 `delete`, `message`, `update`.
 
 ### Files API
-`Vluzrmos\SlackApi\Contracts\SlackFile`
+`SlackLite\SlackApi\Contracts\SlackFile`
 
 Allows you to send, get info, delete,  or just list files:
 `info`, `lists`, `upload`, `delete`.
 
 ### Groups API
-`Vluzrmos\SlackApi\Contracts\SlackGroup`
+`SlackLite\SlackApi\Contracts\SlackGroup`
 
 Same methods of the SlackChannel, but that operates with groups and have adicional methods:
 `open`, `close`, `createChild`
 
 ### Instant Messages API (Direct Messages)
-`Vluzrmos\SlackApi\Contracts\SlackInstantMessage`
+`SlackLite\SlackApi\Contracts\SlackInstantMessage`
 
 Allows you to manage direct messages to your team members.
 
 ### Real Time Messages API
-`Vluzrmos\SlackApi\Contracts\SlackRealTimeMessage`
+`SlackLite\SlackApi\Contracts\SlackRealTimeMessage`
 
 Allows you list all channels and user presence at the moment.
 
 
 ### Search API
-`Vluzrmos\SlackApi\Contracts\SlackSearch`
+`SlackLite\SlackApi\Contracts\SlackSearch`
 
 Find messages or files.
 
 ### Stars API
-`Vluzrmos\SlackApi\Contracts\SlackStar`
+`SlackLite\SlackApi\Contracts\SlackStar`
 
 List all of starred itens.
 
 ### Team API
-`Vluzrmos\SlackApi\Contracts\SlackTeam`
+`SlackLite\SlackApi\Contracts\SlackTeam`
 
 Get information about your team.
 
 ### Users API
-`Vluzrmos\SlackApi\Contracts\SlackUser`
+`SlackLite\SlackApi\Contracts\SlackUser`
 
 Get information about an user on your team or just check your presence ou status.
 
 ### Users Admin API
-`Vluzrmos\SlackApi\Contracts\SlackUserAdmin`
+`SlackLite\SlackApi\Contracts\SlackUserAdmin`
 
 Invite new members to your team.
 
 ## License
 
-[DBAD License](https://dbad-license.org).
+MIT License
+
+Copyright (c) 2020 Doroshenko Serhii
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
