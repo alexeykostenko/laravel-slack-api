@@ -1,12 +1,12 @@
 {
-    "name": "vluzrmos/slack-api",
-    "description": "Wrapper for Slack.com WEB API.",
-    "license": "DBAD",
-    "keywords":["Laravel", "Lumen", "Slack"],
+    "name": "doroshenkoss/slack-api",
+    "description": "Lightweight and simple wrapper for Slack.com WEB API.",
+    "license": "MIT",
+    "keywords":["Laravel", "Slack", "API"],
     "authors": [
         {
-            "name": "Vagner do Carmo",
-            "email": "vluzrmos@gmail.com"
+            "name": "Doroshenko Serhii",
+            "email": ""
         }
     ],
     "require": {
@@ -18,10 +18,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Vluzrmos\\": "src/Vluzrmos/"
+            "SlackLite\\": "src/SlackLite/"
         },
         "files" : [
-            "src/Vluzrmos/SlackApi/helpers.php"
+            "src/SlackLite/SlackApi/helpers.php"
         ]
     },
     "minimum-stability": "dev"
